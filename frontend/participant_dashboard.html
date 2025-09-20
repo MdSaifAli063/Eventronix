@@ -458,6 +458,108 @@
     .bottom-links a:hover { color: var(--primary-600); }
 
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+
+    @media (max-width: 1200px) {
+      .navbar-inner {
+        grid-template-columns: auto 1fr;
+        gap: 16px;
+      }
+      
+      .nav-links {
+        order: 3;
+        grid-column: 1 / span 2;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 8px;
+      }
+      
+      .search-container {
+        width: 100%;
+        order: 2;
+      }
+      
+      .search-container input {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 16px;
+      }
+      
+      .page-header {
+        margin-top: 30px;
+        padding: 20px 0 10px;
+      }
+      
+      .panel {
+        padding: 16px;
+      }
+      
+      #eventTabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 8px;
+      }
+      
+      #eventTabs button {
+        white-space: nowrap;
+      }
+      
+      .event-meta {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .event-actions {
+        flex-direction: column;
+      }
+      
+      .event-actions button {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar-inner {
+        grid-template-columns: 1fr auto;
+      }
+      
+      .logo {
+        font-size: 1.8rem;
+      }
+      
+      .nav-links {
+        gap: 1rem;
+      }
+      
+      .nav-links a {
+        font-size: 0.95rem;
+      }
+      
+      #registerForm {
+        grid-template-columns: 1fr;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .primary-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+
+
+
+
+
+
   </style>
 </head>
 <body>
