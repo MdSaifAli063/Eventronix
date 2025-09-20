@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Devnovate — Discover, Join, Showcase</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="/assets/js/common_dashboard.js"></script>
+  <script src="/assets/js/participant.js"></script>
+  <style>
+    :root {
+      /* Brand palette */
+      --primary: #6a0dad;
+      /* purple */
+      --primary-600: #5c09bf;
+      --primary-700: #4a089a;
+      --accent: #ff6b6b;
+      /* coral accent */
+
+      /* Neutrals */
+      --bg: #f3f4f8;
+      /* app background */
+      --panel: #ffffff;
+      /* white panels */
+      --text: #23262d;
+      --text-muted: #5b6270;
+
+      /* Effects */
+      --glass: rgba(255, 255, 255, 0.72);
+      --border: rgba(0, 0, 0, 0.08);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+      --shadow-strong: 0 20px 50px rgba(0, 0, 0, 0.14);
+
+      /* Radius and scale */
+      --radius: 14px;
+      --radius-lg: 18px;
+
+      /* Container widths */
+      --container: 1600px;
+      /* desktop targeted */
+      --container-wide: 1600px;
+    }
+
+    /* Base */
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(to bottom left, #ffcbbdff, #fceaefff, #ffc5f0ff);
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-size: 18px;
+      /* little bigger overall */
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    /* Visually hidden (for screen readers) */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Layout wrapper to pin footer to bottom */
+    .site {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      display: block;
+    }
+
+    /* Containers */
+    .container {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .container-wide {
+      max-width: var(--container-wide);
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), var(--glass));
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navbar-inner {
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      align-items: center;
+      gap: 22px;
+      padding: 16px 0;
+      /* a bit taller for desktop */
+    }
+
+    .logo {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: .3px;
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 18px rgba(106, 13, 173, 0.12);
+      display: inline-block;
+      transform-origin: left center;
+      animation: pulse 2.8s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1)
+      }
+
+      50% {
+        transform: scale(1.035)
+      }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .nav-links a {
+      position: relative;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 1.06rem;
+      padding: 8px 4px;
+      transition: color .2s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 2px;
+      transition: width .25s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-600);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a:focus-visible {
+      outline: 2px solid var(--primary-600);
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+
+    /* Events dropdown styles */
+    .nav-item {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .nav-trigger {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 1.06rem;
+      padding: 8px 4px;
+    }
+
+    .nav-trigger::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 2px;
+      transition: width .25s ease;
+    }
+
+    .nav-trigger:hover {
+      color: var(--primary-600);
+    }
+
+    .nav-trigger:hover::after {
+      width: 100%;
+    }
+
+    .nav-trigger:focus-visible {
+      outline: 2px solid var(--primary-600);
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+
+    .nav-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      min-width: 230px;
+      padding: 8px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+      display: none;
+      z-index: 1100;
+    }
+
+    .nav-menu.open {
+      display: block;
+    }
+
+    .nav-menu::before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      left: 18px;
+      border-width: 0 8px 8px 8px;
+      border-style: solid;
+      border-color: transparent transparent #ffffff transparent;
+      filter: drop-shadow(0 -1px 0 var(--border));
+    }
+
+    .nav-menu .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 12px;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.98rem;
+      text-decoration: none;
+      transition: background-color .18s ease, color .18s ease, transform .06s ease;
+    }
+
+    .nav-menu .menu-item i {
+      color: var(--primary-700);
+      width: 18px;
+      text-align: center;
+    }
+
+    .nav-menu .menu-item:hover,
+    .nav-menu .menu-item:focus-visible {
+      background: #f5f0ff;
+      outline: none;
+    }
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+      height: 50px;
+      /* larger input */
+    }
+
+    .search-container input {
+      border: none;
+      outline: none;
+      padding: 0 14px 0 16px;
+      width: 280px;
+      /* wider desktop */
+      font-size: 1.02rem;
+      color: var(--text);
+      background: transparent;
+    }
+
+    .search-container input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-container i {
+      padding: 0 14px 0 10px;
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+
+    /* User menu (replaces auth buttons) */
+    .user-menu {
+      position: relative;
+      justify-self: end;
+    }
+
+    .user-trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--primary-700);
+      font-size: 1.6rem;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      transition: transform .06s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
+    }
+
+    .user-trigger:hover {
+      background: #faf7ff;
+      border-color: rgba(106, 13, 173, 0.35);
+      box-shadow: 0 10px 24px rgba(106, 13, 173, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .user-trigger:focus-visible {
+      outline: 2px solid var(--primary-600);
+      outline-offset: 3px;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      min-width: 230px;
+      padding: 8px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+      display: none;
+      z-index: 1100;
+    }
+
+    .user-dropdown.open {
+      display: block;
+    }
+
+    .user-dropdown::before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      right: 18px;
+      border-width: 0 8px 8px 8px;
+      border-style: solid;
+      border-color: transparent transparent #ffffff transparent;
+      filter: drop-shadow(0 -1px 0 var(--border));
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 12px;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.98rem;
+      text-decoration: none;
+      transition: background-color .18s ease, color .18s ease, transform .06s ease;
+    }
+
+    .menu-item i {
+      color: var(--primary-700);
+      width: 18px;
+      text-align: center;
+    }
+
+    .menu-item:hover,
+    .menu-item:focus-visible {
+      background: #f5f0ff;
+      outline: none;
+    }
+
+    .menu-divider {
+      height: 1px;
+      background: #ececf3;
+      margin: 8px 6px;
+      border: 0;
+    }
+
+    /* Hero */
+    .hero {
+      margin-top: 60px;
+      position: relative;
+      padding: 56px 0;
+      /* bigger hero */
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      /* two columns on desktop */
+      align-items: center;
+      gap: 36px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 1.5vw + 2rem, 3rem);
+      line-height: 1.15;
+      margin: 0 0 14px;
+      letter-spacing: .2px;
+    }
+
+    .hero p {
+      margin: 0 0 20px;
+      color: var(--text-muted);
+      font-size: 1.08rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.9rem 1.35rem;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font-weight: 800;
+      font-size: 1.7rem;
+      cursor: pointer;
+      transition: transform .06s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, var(--primary), var(--primary-600));
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(106, 13, 173, 0.22);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(180deg, var(--primary-600), var(--primary-700));
+      transform: translateY(-1px);
+    }
+    .btn-primary1:hover{
+      background: linear-gradient(180deg, rgb(246, 61, 61), rgb(200, 10, 10));
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(246, 61, 61, 0.22);
+
+    }
+
+    .btn-ghost {
+      background: #fff;
+      color: var(--primary-700);
+      border: 1px solid rgba(106, 13, 173, 0.25);
+    }
+
+    .btn-ghost:hover {
+      background: #faf7ff;
+      border-color: rgba(106, 13, 173, 0.5);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(106, 13, 173, 0.16);
+    }
+
+    .hero-panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-strong);
+      padding: 24px;
+    }
+
+    .hero-panel h3 {
+      margin: 0 0 12px;
+      font-size: 1.3rem;
+    }
+
+    .hero-kpis {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .kpi {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .kpi b {
+      display: block;
+      font-size: 1.4rem;
+    }
+
+    .kpi span {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+    }
+
+    /* Featured section */
+    .section {
+      padding: 40px 0;
+    }
+
+    .section h2 {
+      font-size: clamp(1.6rem, 1vw + 1.3rem, 2.1rem);
+      margin: 0 0 18px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      transition: transform .06s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+      border-color: rgba(106, 13, 173, 0.25);
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    /* Footer - rearranged */
+    footer {
+      background: #fff;
+      color: var(--text);
+      padding: 3.2rem 0;
+      box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.05);
+      border-top: 1px solid var(--border);
+      margin-top: 100px;
+    }
+
+    /* Top row: brand + newsletter + social */
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 2fr 1fr;
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .footer-brand h2 {
+      color: var(--primary);
+      margin: 0 0 8px;
+      font-size: 1.9rem;
+      letter-spacing: .3px;
+    }
+
+    .footer-brand p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .newsletter {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #faf7ff;
+      border: 1px solid rgba(106, 13, 173, 0.18);
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04) inset;
+    }
+
+    .newsletter input[type="email"] {
+      flex: 1;
+      height: 46px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 10px;
+      padding: 0 12px;
+      outline: none;
+      font-size: 1rem;
+      background: #fff;
+      color: var(--text);
+      transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+    }
+
+    .newsletter input[type="email"]::placeholder {
+      color: var(--text-muted);
+    }
+
+    .newsletter input[type="email"]:focus {
+      border-color: var(--primary-600);
+      box-shadow: 0 0 0 4px rgba(106, 13, 173, 0.18);
+      background: #fff;
+    }
+
+    .newsletter button {
+      height: 46px;
+      padding: 0 16px;
+      border: 1px solid rgba(106, 13, 173, 0.35);
+      border-radius: 10px;
+      background: linear-gradient(180deg, var(--primary), var(--primary-600));
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .06s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease;
+      box-shadow: 0 10px 22px rgba(106, 13, 173, 0.18);
+    }
+
+    .newsletter button:hover {
+      background: linear-gradient(180deg, var(--primary-600), var(--primary-700));
+      transform: translateY(-1px);
+    }
+
+    .footer-social {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-social i {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: #fff;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      transition: transform .08s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
+      cursor: pointer;
+    }
+
+    .footer-social i:hover {
+      transform: translateY(-1px);
+      background: var(--primary);
+      color: #fff;
+      border-color: rgba(106, 13, 173, 0.55);
+      box-shadow: 0 10px 24px rgba(106, 13, 173, 0.25);
+    }
+
+    /* Middle: links grid */
+    .footer-links {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    .footer-col h4 {
+      margin: 0 0 12px;
+      color: #111;
+      font-size: 1.15rem;
+    }
+
+    .footer-col a {
+      display: block;
+      color: #465067;
+      text-decoration: none;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      transition: color .2s ease, transform .06s ease;
+    }
+
+    .footer-col a:hover {
+      color: var(--primary-600);
+      transform: translateX(2px);
+    }
+
+    /* Bottom bar */
+    .footer-bottom {
+      margin-top: 24px;
+      border-top: 1px solid #e9e9ee;
+      padding-top: 16px;
+      font-size: 0.98rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+      color: var(--text-muted);
+    }
+
+    .footer-bottom .bottom-links a {
+      color: var(--text-muted);
+      margin-right: 14px;
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+
+    .footer-bottom .bottom-links a:hover {
+      color: var(--primary-600);
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-panel {
+        order: 2;
+      }
+
+      .footer-top {
+        grid-template-columns: 1.5fr 1.5fr;
+      }
+
+      .footer-social {
+        justify-content: flex-start;
+      }
+
+      .footer-links {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .footer-top {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-links {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="site">
+    <!-- Navbar -->
+    <header class="navbar" role="banner">
+      <div class="container navbar-inner">
+        <div class="logo">Eventronix</div>
+
+        <nav class="nav-links" aria-label="Primary">
+          <a href="#">Home</a>
+
+          <!-- Event dropdown -->
+          <div class="nav-item">
+            <button
+              class="nav-trigger"
+              id="event-menu-button"
+              aria-haspopup="menu"
+              aria-expanded="false"
+              aria-controls="event-dropdown"
+              title="Browse events"
+            >
+              Event
+              <i class="fa-solid fa-chevron-down" aria-hidden="true" style="font-size: .85rem;"></i>
+            </button>
+
+            <div class="nav-menu" id="event-dropdown" role="menu" aria-labelledby="event-menu-button">
+              <a class="menu-item"  onclick="filterEvents('all')" role="menuitem">
+                <i class="fa-solid fa-list-ul" aria-hidden="true"></i>
+                <span>All Events</span>
+              </a>
+              <a class="menu-item" onclick="goToOrganizerDashboard()" role="menuitem">
+                <i class="fa-solid fa-user-tie" aria-hidden="true"></i>
+                <span>Organizer</span>
+              </a>
+              <a class="menu-item" onclick="goToParticipantDashboard()" role="menuitem">
+                <i class="fa-solid fa-user" aria-hidden="true"></i>
+                <span>Participant</span>
+              </a>
+              <a class="menu-item" onclick="navigateTo('virtual_event')"role="menuitem">
+                <i class="fa-solid fa-vr-cardboard" aria-hidden="true"></i>
+                <span>Virtual Event</span>
+              </a>
+            </div>
+          </div>
+          <!-- End Event dropdown -->
+
+          <a  onclick="navigateTo('hackathon')" >Hackathons</a>
+          <a  onclick="navigateTo('webinar')">Webinars</a>
+          <a  onclick="navigateTo('conference')">Conferences</a>
+          <a  onclick="navigateTo('workshop')">Workshops</a>
+        </nav>
+
+        <div class="search-container" role="search">
+          <input type="text" placeholder="Search events..." aria-label="Search" />
+          <i class="fas fa-search" aria-hidden="true"></i>
+        </div>
+
+        <!-- Replaced login/signup buttons with user icon + dropdown -->
+        <div class="user-menu">
+          <button class="user-trigger" id="user-menu-button" aria-haspopup="menu" aria-expanded="false"
+            aria-controls="user-dropdown" title="User menu">
+            <span class="sr-only">Open user menu</span>
+            <i class="fa-regular fa-circle-user" aria-hidden="true"></i>
+          </button>
+
+          <div class="user-dropdown" id="user-dropdown" role="menu" aria-labelledby="user-menu-button">
+            <a class="menu-item" href="/signin" role="menuitem">
+              <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+              <span>Login</span>
+            </a>
+            <a class="menu-item" href="/signup" role="menuitem">
+              <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
+              <span>Sign up</span>
+            </a>
+            <hr class="menu-divider" />
+            <a class="menu-item" onclick="logout()" role="menuitem">
+              <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+              <span>Logout</span>
+            </a>
+          </div>
+        </div>
+        <!-- End user menu -->
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main id="main">
+      <!-- Hero -->
+      <section class="hero">
+        <div class="container hero-inner">
+          <div>
+            <h1>Discover events, join instantly, and showcase your wins</h1>
+            <p>Eventronix brings the best hackathons, webinars, and student communities into one place. No forms. No
+              friction. Just opportunities.</p>
+            <div class="hero-cta">
+              <button onclick="goToOrganizerDashboard()" class="btn btn-primary"><i class="fa-solid fa-plus"
+                  aria-hidden="true"></i>Host</button>
+              <button style="background-color: rgb(246, 30, 30); color: #fff;"   onclick="goToParticipantDashboard()" class="btn btn-primary1"><i class="fa-solid fa-user"
+                  aria-hidden="true"></i>Participant</button>
+            </div>
+          </div>
+
+          <div id="mainContent">
+              <div id="eventsList"></div>
+          </div>
+
+          <aside class="hero-panel" aria-label="Highlights">
+            <h3>Live Highlights</h3>
+            <div class="hero-kpis">
+              <div class="kpi">
+                <b>120+</b>
+                <span>Active Events</span>
+              </div>
+              <div class="kpi">
+                <b>35k</b>
+                <span>Participants</span>
+              </div>
+              <div class="kpi">
+                <b>4.9/5</b>
+                <span>User Rating</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- Featured cards -->
+      <section class="section">
+        <div class="container">
+          <h2>Featured This Week</h2>
+          <div class="cards">
+            <article class="card">
+              <h3><i class="fa-solid fa-robot" aria-hidden="true"></i> AI Roadmap Generator</h3>
+              <p>Create detailed event plans with AI assistance for event organiser.</p>
+            </article>
+            <article class="card">
+              <h3><i class="fa-solid fa-users" aria-hidden="true"></i> AI Team Matching</h3>
+              <p>Find teammates based on skills and interests for hackathon events.</p>
+            </article>
+            <article class="card">
+              <h3><i class="fa-solid fa-video" aria-hidden="true"></i> Virtual Events</h3>
+              <p>Host engaging online events with chat and streaming.</p>
+            </article>
+            <article class="card">
+              <h3><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Analytics</h3>
+              <p>Gain deep insights from participant and team data.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer (rearranged) -->
+    <footer role="contentinfo">
+      <div class="container-wide">
+        <!-- Top: Brand + Newsletter + Social -->
+        <div class="footer-top">
+          <div class="footer-brand">
+            <h2>Eventronix</h2>
+            <p>Fueling your journey from idea to impact in hackathons worldwide.</p>
+          </div>
+
+          <form class="newsletter" action="#" method="post" aria-label="Subscribe to newsletter">
+            <!-- If using Django, include {% csrf_token %} -->
+            <input type="email" name="email" placeholder="Your email address" aria-label="Email address" required />
+            <button type="submit" aria-label="Subscribe">Subscribe</button>
+          </form>
+
+          <div class="footer-social" role="group" aria-label="Social links">
+            <i class="fab fa-instagram" title="Instagram" aria-hidden="true"></i>
+            <i class="fab fa-x" title="X (Twitter)" aria-hidden="true"></i>
+            <i class="fab fa-github" title="GitHub" aria-hidden="true"></i>
+            <i class="fab fa-linkedin" title="LinkedIn" aria-hidden="true"></i>
+            <i class="fab fa-discord" title="Discord" aria-hidden="true"></i>
+          </div>
+        </div>
+
+        <!-- Middle: Links grid -->
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Explore</h4>
+            <a href="#">Events</a>
+            <a href="#">Hackathons</a>
+            <a href="#">Webinars</a>
+            <a href="#">Participants</a>
+          </div>
+
+          <div class="footer-col">
+            <h4>Resources</h4>
+            <a href="#">How it works</a>
+            <a href="#">Features</a>
+            <a href="#">Pricing</a>
+            <a href="#">FAQ</a>
+            <a href="#">Blog</a>
+          </div>
+
+          <div class="footer-col">
+            <h4>Company</h4>
+            <a href="#">About</a>
+            <a href="#">Careers</a>
+            <a href="#">Press</a>
+            <a href="#">Contact</a>
+          </div>
+
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Cookie Policy</a>
+            <a href="#">Accessibility</a>
+          </div>
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="footer-bottom">
+          <div class="bottom-links">
+            <a href="#">Status</a>
+            <a href="#">Docs</a>
+            <a href="#">Security</a>
+            <a href="#">Brand</a>
+          </div>
+          <div>©2025 Eventronix. All rights reserved.</div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Minimal JS for user dropdown + event dropdown -->
+  <script>
+    (function () {
+      // User menu
+      const trigger = document.getElementById('user-menu-button');
+      const menu = document.getElementById('user-dropdown');
+
+      const openMenu = () => { menu.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); };
+      const closeMenu = () => { menu.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); };
+      const toggleMenu = () => { menu.classList.contains('open') ? closeMenu() : openMenu(); };
+
+      if (trigger && menu) {
+        trigger.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(); });
+      }
+
+      // Events dropdown
+      const evtTrigger = document.getElementById('event-menu-button');
+      const evtMenu = document.getElementById('event-dropdown');
+
+      const openEvt = () => { evtMenu.classList.add('open'); evtTrigger.setAttribute('aria-expanded', 'true'); };
+      const closeEvt = () => { evtMenu.classList.remove('open'); evtTrigger.setAttribute('aria-expanded', 'false'); };
+      const toggleEvt = () => { evtMenu.classList.contains('open') ? closeEvt() : openEvt(); };
+
+      if (evtTrigger && evtMenu) {
+        evtTrigger.addEventListener('click', (e) => { e.stopPropagation(); toggleEvt(); });
+      }
+
+      // Global close on click outside
+      document.addEventListener('click', (e) => {
+        if (menu && trigger && !menu.contains(e.target) && e.target !== trigger) closeMenu();
+        if (evtMenu && evtTrigger && !evtMenu.contains(e.target) && e.target !== evtTrigger) closeEvt();
+      });
+
+      // ESC closes both
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (menu) closeMenu();
+          if (evtMenu) closeEvt();
+        }
+      });
+    })();
+  </script>
+</body>
+
+</html>

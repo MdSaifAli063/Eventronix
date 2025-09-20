@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign up — Eventronix</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary: #6a0dad;
+            --primary-600: #5c09bf;
+            --primary-700: #4a089a;
+            --accent: #ff6b6b;
+            --bg: #f3f4f8;
+            --panel: #ffffff;
+            --text: #23262d;
+            --text-muted: #5b6270;
+            --glass: rgba(255, 255, 255, 0.72);
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+            --shadow-strong: 0 20px 50px rgba(0, 0, 0, 0.14);
+            --radius: 14px;
+            --radius-lg: 18px;
+            --container: 1600px;
+            --container-wide: 1600px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+            color: var(--text);
+            background: linear-gradient(to bottom left, #ffcbbdff, #fceaefff, #ffc5f0ff);
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-size: 18px;
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .site {
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            display: block;
+        }
+
+        .container {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), var(--glass));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar-inner {
+            display: grid;
+            grid-template-columns: auto 1fr auto auto;
+            align-items: center;
+            gap: 22px;
+            padding: 16px 0;
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: .3px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 4px 18px rgba(106, 13, 173, 0.12);
+            display: inline-block;
+            transform-origin: left center;
+            animation: pulse 2.8s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1)
+            }
+
+            50% {
+                transform: scale(1.035)
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            position: relative;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 700;
+            font-size: 1.06rem;
+            padding: 8px 4px;
+            transition: color .2s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+            transition: width .25s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-600);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:focus-visible {
+            outline: 2px solid var(--primary-600);
+            outline-offset: 3px;
+            border-radius: 6px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+            height: 50px;
+        }
+
+        .search-container input {
+            border: none;
+            outline: none;
+            padding: 0 14px 0 16px;
+            width: 280px;
+            font-size: 1.02rem;
+            color: var(--text);
+            background: transparent;
+        }
+
+        .search-container i {
+            padding: 0 14px 0 10px;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .user-menu {
+            position: relative;
+            justify-self: end;
+        }
+
+        .user-trigger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: #ffffff;
+            color: var(--primary-700);
+            font-size: 1.6rem;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transition: transform .06s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
+        }
+
+        .user-trigger:hover {
+            background: #faf7ff;
+            border-color: rgba(106, 13, 173, 0.35);
+            box-shadow: 0 10px 24px rgba(106, 13, 173, 0.18);
+            transform: translateY(-1px);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            min-width: 230px;
+            padding: 8px;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+            display: none;
+            z-index: 1100;
+        }
+
+        .user-dropdown.open {
+            display: block;
+        }
+
+        .user-dropdown::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            right: 18px;
+            border-width: 0 8px 8px 8px;
+            border-style: solid;
+            border-color: transparent transparent #ffffff transparent;
+            filter: drop-shadow(0 -1px 0 var(--border));
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 10px 12px;
+            border: none;
+            background: transparent;
+            color: var(--text);
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.98rem;
+            text-decoration: none;
+            transition: background-color .18s ease, color .18s ease, transform .06s ease;
+        }
+
+        .menu-item:hover,
+        .menu-item:focus-visible {
+            background: #f5f0ff;
+            outline: none;
+        }
+
+        .menu-divider {
+            height: 1px;
+            background: #ececf3;
+            margin: 8px 6px;
+            border: 0;
+        }
+
+        /* Auth layout */
+        .auth {
+            margin-top: 60px;
+            padding: 56px 0;
+        }
+
+        .auth-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 36px;
+            align-items: center;
+        }
+
+        .auth-intro h1 {
+            font-size: clamp(2rem, 1.2vw + 1.8rem, 2.6rem);
+            margin: 0 0 12px;
+        }
+
+        .auth-intro p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        .auth-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-strong);
+            padding: 28px;
+        }
+
+        .auth-card h2 {
+            margin: 0 0 6px;
+            font-size: 1.5rem;
+        }
+
+        .auth-muted {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            margin-bottom: 18px;
+        }
+
+        .form-row {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .field {
+            display: grid;
+            gap: 6px;
+        }
+
+        .field label {
+            font-weight: 700;
+            font-size: 0.98rem;
+        }
+
+        .input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: #fff;
+            height: 50px;
+            padding: 0 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) inset;
+        }
+
+        .input-wrap input,
+        .input-wrap select {
+            border: none;
+            outline: none;
+            flex: 1;
+            height: 100%;
+            font-size: 1rem;
+            color: var(--text);
+            background: transparent;
+        }
+
+        .input-wrap i {
+            color: var(--primary-700);
+            margin-right: 8px;
+        }
+
+        .toggle-pass {
+            cursor: pointer;
+            color: var(--text-muted);
+            background: transparent;
+            border: 0;
+            font-size: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.9rem 1.35rem;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform .06s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(180deg, var(--primary), var(--primary-600));
+            color: #fff;
+            box-shadow: 0 12px 28px rgba(106, 13, 173, 0.22);
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(180deg, var(--primary-600), var(--primary-700));
+            transform: translateY(-1px);
+        }
+
+        .btn-ghost {
+            background: #fff;
+            color: var(--primary-700);
+            border: 1px solid rgba(106, 13, 173, 0.25);
+        }
+
+        .btn-ghost:hover {
+            background: #faf7ff;
+            border-color: rgba(106, 13, 173, 0.5);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 22px rgba(106, 13, 173, 0.16);
+        }
+
+        footer {
+            background: #fff;
+            color: var(--text);
+            padding: 2rem 0;
+            box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.05);
+            border-top: 1px solid var(--border);
+            margin-top: 80px;
+        }
+
+        .footer-bottom {
+            font-size: 0.98rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 16px;
+            color: var(--text-muted);
+        }
+
+        .bottom-links a {
+            color: var(--text-muted);
+            margin-right: 14px;
+            text-decoration: none;
+        }
+
+        .bottom-links a:hover {
+            color: var(--primary-600);
+        }
+
+        @media (max-width: 1100px) {
+            .auth-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-container input {
+                width: 180px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="site">
+        <!-- Navbar -->
+        <header class="navbar" role="banner">
+            <div class="container navbar-inner">
+                <a class="logo" href="/" aria-label="Go to home">Eventronix</a>
+
+                <nav class="nav-links" aria-label="Primary">
+                    <a href="/">Home</a>
+                    <a  onclick="filterEvents('all')">Event</a>
+                    <a href="#">Hackathons</a>
+                    <a href="#">Webinars</a>
+                    <a href="#">Conferences</a>
+                    <a href="#">Workshops</a>
+                </nav>
+
+                <div class="search-container" role="search">
+                    <input type="text" placeholder="Search events..." aria-label="Search" />
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                </div>
+
+                <div class="user-menu">
+                    <button class="user-trigger" id="user-menu-button" aria-haspopup="menu" aria-expanded="false"
+                        aria-controls="user-dropdown" title="User menu">
+                        <span class="sr-only">Open user menu</span>
+                        <i class="fa-regular fa-circle-user" aria-hidden="true"></i>
+                    </button>
+
+                    <div class="user-dropdown" id="user-dropdown" role="menu" aria-labelledby="user-menu-button">
+                        <a class="menu-item" href="/signin" role="menuitem">
+                            <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+                            <span>Login</span>
+                        </a>
+                        <a class="menu-item" href="/signup" role="menuitem" aria-current="page">
+                            <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
+                            <span>Sign up</span>
+                        </a>
+                        <hr class="menu-divider" />
+                        <a class="menu-item" onclick="logout()"  role="menuitem">
+                            <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main -->
+        <main id="main">
+            <section class="auth">
+                <div class="container auth-grid">
+                    <div class="auth-intro">
+                        <h1>Create your Eventronix account</h1>
+                        <p>Sign up to discover events, join instantly, and build your profile.</p>
+                    </div>
+
+                    <div class="auth-card" aria-label="Signup form">
+                        <h2>Sign up</h2>
+                        <div class="auth-muted">
+                            Already have an account? <a class="link" href="/signin.html">Sign in</a>
+                        </div>
+
+                        <!-- Keep original IDs for JS compatibility -->
+                        <form id="authForm" action="#" method="post" novalidate>
+                            <div class="form-row">
+                                <div class="field">
+                                    <label for="email">Email</label>
+                                    <div class="input-wrap">
+                                        <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+                                        <input type="email" id="email" name="email" placeholder="you@example.com"
+                                            autocomplete="email" required />
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <label for="password">Password</label>
+                                    <div class="input-wrap">
+                                        <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                                        <input type="password" id="password" name="password"
+                                            placeholder="Create a password" autocomplete="new-password" minlength="6"
+                                            required />
+                                        <button type="button" class="toggle-pass" data-target="password"
+                                            aria-label="Show or hide password">
+                                            <i class="fa-regular fa-eye" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <label for="role">Role</label>
+                                    <div class="input-wrap">
+                                        <i class="fa-solid fa-user-tag" aria-hidden="true"></i>
+                                        <select id="role" name="role" required>
+                                            <option value="">Select Role</option>
+                                            <option value="participant">Participant</option>
+                                            <option value="organizer">Organizer</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top:16px;">
+                                <button type="submit" id="signupBtn" class="btn btn-primary">
+                                    <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
+                                    Create account
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer role="contentinfo">
+            <div class="container footer-bottom">
+                <div class="bottom-links">
+                    <a href="#">Status</a>
+                    <a href="#">Docs</a>
+                    <a href="#">Security</a>
+                    <a href="#">Brand</a>
+                </div>
+                <div>©2025 Eventronix. All rights reserved.</div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Minimal JS for user dropdown + password toggle + light client-side checks -->
+    <script>
+        (function () {
+            const trigger = document.getElementById('user-menu-button');
+            const menu = document.getElementById('user-dropdown');
+            if (trigger && menu) {
+                const openMenu = () => { menu.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); };
+                const closeMenu = () => { menu.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); };
+                trigger.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.contains('open') ? closeMenu() : openMenu(); });
+                document.addEventListener('click', (e) => { if (!menu.contains(e.target) && e.target !== trigger) closeMenu(); });
+                document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+            }
+
+            // Password toggle
+            document.querySelectorAll('.toggle-pass').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = btn.getAttribute('data-target');
+                    const input = document.getElementById(id);
+                    if (!input) return;
+                    const isPw = input.type === 'password';
+                    input.type = isPw ? 'text' : 'password';
+                    btn.innerHTML = isPw
+                        ? '<i class="fa-regular fa-eye-slash" aria-hidden="true"></i>'
+                        : '<i class="fa-regular fa-eye" aria-hidden="true"></i>';
+                });
+            });
+
+            // Basic validation to mirror original behavior
+            document.getElementById('authForm')?.addEventListener('submit', (e) => {
+                const email = document.getElementById('email');
+                const pass = document.getElementById('password');
+                const role = document.getElementById('role');
+
+                if (!email.value || !pass.value || !role.value) {
+                    e.preventDefault();
+                    alert('Please fill in email, password, and select a role.');
+                    return;
+                }
+            });
+        })();
+    </script>
+
+    <!-- Keep your existing app script if used elsewhere -->
+    <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f1f1f1;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+#eventsList div {
+    background: white;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#eventsList div button {
+    margin-left: 10px;
+    padding: 5px 10px;
+}
+
+#analytics {
+    background: white;
+    margin: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    max-height: 400px;
+    overflow-y: scroll;
+}

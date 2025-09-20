@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hackathon — Eventronix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Keep your existing assets -->
+  <!-- <link rel="stylesheet" href="../assets/css/style.css" /> -->
+  <script defer src="../assets/js/event_pages.js"></script>
+  <script defer src="../assets/js/common_dashboard.js"></script>
+  <script defer src="../assets/js/participant.js"></script>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #6a0dad;
+      --primary-600: #5c09bf;
+      --primary-700: #4a089a;
+      --accent: #ff6b6b;
+
+      --bg: #f3f4f8;
+      --panel: #ffffff;
+      --text: #23262d;
+      --text-muted: #5b6270;
+
+      --glass: rgba(255,255,255,0.72);
+      --border: rgba(0,0,0,0.08);
+      --shadow: 0 10px 30px rgba(0,0,0,0.10);
+      --shadow-strong: 0 20px 50px rgba(0,0,0,0.14);
+
+      --radius: 14px;
+      --radius-lg: 18px;
+      --container: 1600px;
+      --container-wide: 1600px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(to bottom left, #ffcbbdff, #fceaefff, #ffc5f0ff);
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-size: 18px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    .site { min-height: 100dvh; display: flex; flex-direction: column; }
+    main { flex: 1; display: block; }
+
+    .container { max-width: var(--container); margin: 0 auto; padding: 0 28px; }
+    .container-wide { max-width: var(--container-wide); margin: 0 auto; padding: 0 28px; }
+
+    /* Navbar */
+    .navbar {
+      position: sticky; top: 0; z-index: 1000;
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), var(--glass));
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      border-bottom: 1px solid var(--border);
+    }
+    .navbar-inner {
+      display: grid; grid-template-columns: auto 1fr auto auto;
+      align-items: center; gap: 22px; padding: 16px 0;
+    }
+    .logo {
+      font-size: 2.2rem; font-weight: 800; letter-spacing: .3px;
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 4px 18px rgba(106, 13, 173, 0.12);
+      transform-origin: left center; animation: pulse 2.8s infinite ease-in-out;
+    }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.035)} }
+
+    .nav-links { display: flex; gap: 2rem; justify-content: center; align-items: center; }
+    .nav-links a,
+    .nav-trigger {
+      position: relative; text-decoration: none; color: var(--text);
+      font-weight: 700; font-size: 1.06rem; padding: 8px 4px;
+      transition: color .2s ease; background: transparent; border: 0; cursor: pointer;
+    }
+    .nav-links a::after, .nav-trigger::after {
+      content: ''; position: absolute; bottom: -6px; left: 0;
+      width: 0%; height: 3px; background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 2px; transition: width .25s ease;
+    }
+    .nav-links a:hover, .nav-trigger:hover { color: var(--primary-600); }
+    .nav-links a:hover::after, .nav-trigger:hover::after { width: 100%; }
+    .nav-links a:focus-visible, .nav-trigger:focus-visible {
+      outline: 2px solid var(--primary-600); outline-offset: 3px; border-radius: 6px;
+    }
+
+    /* Event dropdown */
+    .nav-item { position: relative; display: inline-flex; align-items: center; }
+    .nav-menu {
+      position: absolute; top: calc(100% + 10px); left: 0; min-width: 230px; padding: 8px;
+      background: #ffffff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+      display: none; z-index: 1100;
+    }
+    .nav-menu.open { display: block; }
+    .nav-menu::before {
+      content: ""; position: absolute; top: -8px; left: 18px;
+      border-width: 0 8px 8px 8px; border-style: solid; border-color: transparent transparent #ffffff transparent;
+      filter: drop-shadow(0 -1px 0 var(--border));
+    }
+    .nav-menu .menu-item {
+      display: flex; align-items: center; gap: 10px; width: 100%;
+      padding: 10px 12px; border: none; background: transparent; color: var(--text);
+      border-radius: 10px; cursor: pointer; text-align: left; font-weight: 700; font-size: 0.98rem; text-decoration: none;
+      transition: background-color .18s ease, color .18s ease, transform .06s ease;
+    }
+    .nav-menu .menu-item i { color: var(--primary-700); width: 18px; text-align: center; }
+    .nav-menu .menu-item:hover, .nav-menu .menu-item:focus-visible { background: #f5f0ff; outline: none; }
+
+    /* Search */
+    .search-container {
+      display: flex; align-items: center; background: #fff; border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--border); box-shadow: 0 4px 14px rgba(0,0,0,0.06); height: 50px;
+    }
+    .search-container input {
+      border: none; outline: none; padding: 0 14px 0 16px; width: 280px; font-size: 1.02rem; color: var(--text); background: transparent;
+    }
+    .search-container input::placeholder { color: var(--text-muted); }
+    .search-container i { padding: 0 14px 0 10px; color: var(--primary); font-size: 1.1rem; }
+
+    /* User menu */
+    .user-menu { position: relative; justify-self: end; }
+    .user-trigger {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 50px; height: 50px; border-radius: 999px; border: 1px solid var(--border);
+      background: #ffffff; color: var(--primary-700); font-size: 1.6rem; cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      transition: transform .06s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
+    }
+    .user-trigger:hover { background: #faf7ff; border-color: rgba(106, 13, 173, 0.35); box-shadow: 0 10px 24px rgba(106, 13, 173, 0.18); transform: translateY(-1px); }
+    .user-trigger:focus-visible { outline: 2px solid var(--primary-600); outline-offset: 3px; }
+    .user-dropdown {
+      position: absolute; top: calc(100% + 10px); right: 0; min-width: 230px; padding: 8px; background: #ffffff; border: 1px solid var(--border);
+      border-radius: 12px; box-shadow: 0 16px 40px rgba(0,0,0,0.12); display: none; z-index: 1100;
+    }
+    .user-dropdown.open { display: block; }
+    .user-dropdown::before {
+      content: ""; position: absolute; top: -8px; right: 18px;
+      border-width: 0 8px 8px 8px; border-style: solid; border-color: transparent transparent #ffffff transparent;
+      filter: drop-shadow(0 -1px 0 var(--border));
+    }
+    .menu-item { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: none; background: transparent; color: var(--text);
+      border-radius: 10px; cursor: pointer; text-align: left; font-weight: 700; font-size: 0.98rem; text-decoration: none; transition: background-color .18s ease, color .18s ease, transform .06s ease; }
+    .menu-item i { color: var(--primary-700); width: 18px; text-align: center; }
+    .menu-item:hover, .menu-item:focus-visible { background: #f5f0ff; outline: none; }
+    .menu-divider { height: 1px; background: #ececf3; margin: 8px 6px; border: 0; }
+
+    /* Page header */
+    .page-header { margin-top: 60px; padding: 36px 0 10px; }
+    .page-header h1 { margin: 0; font-size: clamp(1.8rem, 1.2vw + 1.6rem, 2.4rem); }
+    .page-header p { margin: 6px 0 0; color: var(--text-muted); }
+
+    /* Panels and layout */
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-strong);
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+    .panel h2 { margin: 0 0 12px; font-size: 1.3rem; }
+    .subtle { color: var(--text-muted); font-size: 0.98rem; margin-top: -6px; margin-bottom: 12px; }
+
+    /* Form styles aligned with theme */
+    form .form-row { display: grid; gap: 12px; margin-bottom: 14px; }
+    .field { display: grid; gap: 6px; }
+    .field label { font-weight: 700; font-size: 0.98rem; }
+    .input-wrap {
+      position: relative; display: flex; align-items: center; border: 1px solid var(--border);
+      border-radius: 12px; background: #fff; height: 50px; padding: 0 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.04) inset;
+    }
+    .input-wrap input, .input-wrap select {
+      border: none; outline: none; flex: 1; height: 100%;
+      font-size: 1rem; color: var(--text); background: transparent;
+    }
+    .input-wrap i { color: var(--primary-700); margin-right: 8px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 0.85rem 1.2rem; border-radius: 12px; border: 1px solid transparent;
+      font-weight: 800; font-size: 1.05rem; cursor: pointer;
+      transition: transform .06s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(180deg, var(--primary), var(--primary-600));
+      color: #fff; box-shadow: 0 12px 28px rgba(106,13,173,0.22);
+    }
+    .btn-primary:hover { background: linear-gradient(180deg, var(--primary-600), var(--primary-700)); transform: translateY(-1px); }
+    .btn-ghost { background: #fff; color: var(--primary-700); border: 1px solid rgba(106,13,173,0.25); }
+    .btn-ghost:hover { background: #faf7ff; border-color: rgba(106,13,173,0.5); transform: translateY(-1px); box-shadow: 0 10px 22px rgba(106,13,173,0.16); }
+
+    /* Footer */
+    footer {
+      background: #fff; color: var(--text); padding: 2rem 0; box-shadow: 0 -6px 18px rgba(0,0,0,0.05);
+      border-top: 1px solid var(--border); margin-top: 60px;
+    }
+    .footer-bottom {
+      font-size: 0.98rem; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; color: var(--text-muted);
+    }
+    .bottom-links a { color: var(--text-muted); margin-right: 14px; }
+    .bottom-links a:hover { color: var(--primary-600); }
+
+    @media (max-width: 1100px) {
+      .container { padding: 0 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="site">
+    <!-- Navbar -->
+    <header class="navbar" role="banner">
+      <div class="container navbar-inner">
+        <a class="logo" href="/" aria-label="Go to home">Eventronix</a>
+
+        <nav class="nav-links" aria-label="Primary">
+          <a href="/">Home</a>
+
+          <!-- Event dropdown -->
+          <div class="nav-item">
+            <button
+              class="nav-trigger"
+              id="event-menu-button"
+              aria-haspopup="menu"
+              aria-expanded="false"
+              aria-controls="event-dropdown"
+              title="Browse events"
+            >
+              Event
+              <i class="fa-solid fa-chevron-down" aria-hidden="true" style="font-size:.85rem;"></i>
+            </button>
+            <div class="nav-menu" id="event-dropdown" role="menu" aria-labelledby="event-menu-button">
+              <a class="menu-item"  onclick="filterEvents('all')" role="menuitem">
+                <i class="fa-solid fa-list-ul" aria-hidden="true"></i>
+                <span>All Events</span>
+              </a>
+              <a class="menu-item" href="/organizer_dashboard.html" role="menuitem">
+                <i class="fa-solid fa-user-tie" aria-hidden="true"></i>
+                <span>Organizer</span>
+              </a>
+              <a class="menu-item" href="/participant_dashboard.html" role="menuitem">
+                <i class="fa-solid fa-user" aria-hidden="true"></i>
+                <span>Participant</span>
+              </a>
+              <a class="menu-item" href="/virtual_event.html" role="menuitem">
+                <i class="fa-solid fa-vr-cardboard" aria-hidden="true"></i>
+                <span>Virtual Event</span>
+              </a>
+            </div>
+          </div>
+          <!-- End dropdown -->
+
+          <a href="#">Hackathons</a>
+          <a href="/event_pages/webinar.html">Webinars</a>
+          <a href="/event_pages/conference.html">Conferences</a>
+          <a href="/event_pages/workshop.html">Workshops</a>
+        </nav>
+
+        <div class="search-container" role="search">
+          <input type="text" placeholder="Search events..." aria-label="Search" />
+          <i class="fas fa-search" aria-hidden="true"></i>
+        </div>
+
+        <div class="user-menu">
+          <button class="user-trigger" id="user-menu-button" aria-haspopup="menu" aria-expanded="false" aria-controls="user-dropdown" title="User menu">
+            <span class="sr-only">Open user menu</span>
+            <i class="fa-regular fa-circle-user" aria-hidden="true"></i>
+          </button>
+          <div class="user-dropdown" id="user-dropdown" role="menu" aria-labelledby="user-menu-button">
+            <a class="menu-item" href="/signin" role="menuitem">
+              <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+              <span>Login</span>
+            </a>
+            <a class="menu-item" href="/signup" role="menuitem">
+              <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
+              <span>Sign up</span>
+            </a>
+            <hr class="menu-divider" />
+            <a class="menu-item" onclick="logout()"  href="/logout" role="menuitem">
+              <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+              <span>Logout</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page header -->
+    <section class="page-header">
+      <div class="container">
+        <h1>Hackathon</h1>
+        <p class="subtle">Event details and quick registration / team actions.</p>
+      </div>
+    </section>
+
+    <!-- Main content -->
+    <main id="main">
+      <div class="container">
+        <!-- Details -->
+        <section class="panel" aria-label="Hackathon Details">
+          <h2>Details</h2>
+          <div id="hackathonDetails"></div>
+        </section>
+
+        <!-- Registration / Team actions -->
+        <section class="panel" aria-label="Register / Team Actions">
+          <h2>Register / Team Actions</h2>
+
+          <form id="hackathonRegisterForm" novalidate>
+            <div class="form-row">
+              <div class="field">
+                <label for="participantName">Your Name</label>
+                <div class="input-wrap">
+                  <i class="fa-regular fa-user" aria-hidden="true"></i>
+                  <input type="text" id="participantName" placeholder="Your Name" required />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="participantPhone">Phone Number</label>
+                <div class="input-wrap">
+                  <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                  <input type="text" id="participantPhone" placeholder="Phone Number" required />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="participantSkills">Skills</label>
+                <div class="input-wrap">
+                  <i class="fa-solid fa-code" aria-hidden="true"></i>
+                  <input type="text" id="participantSkills" placeholder="Skills (e.g., React, Python, UI/UX)" />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="participantLinkedin">LinkedIn</label>
+                <div class="input-wrap">
+                  <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+                  <input type="text" id="participantLinkedin" placeholder="LinkedIn URL" />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="hackathonAction">Action</label>
+                <div class="input-wrap">
+                  <i class="fa-solid fa-people-group" aria-hidden="true"></i>
+                  <select id="hackathonAction">
+                    <option value="create">Create Team</option>
+                    <option value="join">Join Team</option>
+                    <option value="ai_match">AI Match Team</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="teamNameOrCode">Team Name / Team Code</label>
+                <div class="input-wrap">
+                  <i class="fa-solid fa-users" aria-hidden="true"></i>
+                  <input type="text" id="teamNameOrCode" placeholder="Team Name / Team Code" />
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+              <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+              Submit
+            </button>
+          </form>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+      <div class="container footer-bottom">
+        <div class="bottom-links">
+          <a href="#">Status</a>
+          <a href="#">Docs</a>
+          <a href="#">Security</a>
+          <a href="#">Brand</a>
+        </div>
+        <div>©2025 Eventronix. All rights reserved.</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Minimal JS for dropdowns + helper placeholder -->
+  <script>
+    (function () {
+      // User menu
+      const userTrigger = document.getElementById('user-menu-button');
+      const userMenu = document.getElementById('user-dropdown');
+      const openUser = () => { userMenu?.classList.add('open'); userTrigger?.setAttribute('aria-expanded', 'true'); };
+      const closeUser = () => { userMenu?.classList.remove('open'); userTrigger?.setAttribute('aria-expanded', 'false'); };
+      userTrigger?.addEventListener('click', (e) => { e.stopPropagation(); userMenu.classList.contains('open') ? closeUser() : openUser(); });
+
+      // Event menu
+      const evtTrigger = document.getElementById('event-menu-button');
+      const evtMenu = document.getElementById('event-dropdown');
+      const openEvt = () => { evtMenu?.classList.add('open'); evtTrigger?.setAttribute('aria-expanded', 'true'); };
+      const closeEvt = () => { evtMenu?.classList.remove('open'); evtTrigger?.setAttribute('aria-expanded', 'false'); };
+      evtTrigger?.addEventListener('click', (e) => { e.stopPropagation(); evtMenu.classList.contains('open') ? closeEvt() : openEvt(); });
+
+      // Global close on click outside + ESC
+      document.addEventListener('click', (e) => {
+        if (userMenu && userTrigger && !userMenu.contains(e.target) && e.target !== userTrigger) closeUser();
+        if (evtMenu && evtTrigger && !evtMenu.contains(e.target) && e.target !== evtTrigger) closeEvt();
+      });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeUser(); closeEvt(); } });
+
+      // Optional: adjust placeholder based on action
+      const actionSel = document.getElementById('hackathonAction');
+      const teamInput = document.getElementById('teamNameOrCode');
+      const adjustPlaceholder = () => {
+        const v = actionSel?.value;
+        if (!teamInput) return;
+        if (v === 'create') teamInput.placeholder = 'Team Name';
+        else if (v === 'join') teamInput.placeholder = 'Team Code';
+        else teamInput.placeholder = 'Team Name / Team Code';
+      };
+      actionSel?.addEventListener('change', adjustPlaceholder);
+      adjustPlaceholder();
+    })();
+  </script>
+</body>
+</html>
