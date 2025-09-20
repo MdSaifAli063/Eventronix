@@ -807,6 +807,115 @@
         transition: none !important;
       }
     }
+
+
+    /* Add these responsive styles at the end of the existing style tag */
+    @media (max-width: 1200px) {
+      .navbar-inner {
+        grid-template-columns: auto 1fr;
+        gap: 16px;
+      }
+      
+      .nav-links {
+        order: 3;
+        grid-column: 1 / span 2;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 8px;
+      }
+      
+      .search-container {
+        width: 100%;
+        order: 2;
+      }
+      
+      .search-container input {
+        width: 100%;
+      }
+      
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+      
+      .hero-panel {
+        order: 2;
+      }
+      
+      .footer-top {
+        grid-template-columns: 1.5fr 1.5fr;
+      }
+      
+      .footer-social {
+        justify-content: flex-start;
+      }
+      
+      .footer-links {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 16px;
+      }
+      
+      .hero {
+        margin-top: 30px;
+        padding: 36px 0;
+      }
+      
+      .hero-cta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .hero-kpis {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .footer-top {
+        grid-template-columns: 1fr;
+      }
+      
+      .footer-links {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar-inner {
+        grid-template-columns: 1fr auto;
+      }
+      
+      .logo {
+        font-size: 1.8rem;
+      }
+      
+      .nav-links {
+        gap: 1rem;
+      }
+      
+      .nav-links a {
+        font-size: 0.95rem;
+      }
+      
+      .cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .hero-kpis {
+        grid-template-columns: 1fr;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 
