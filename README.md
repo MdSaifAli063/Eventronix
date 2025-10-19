@@ -1,144 +1,212 @@
-# EventFlow — Event & Team Management Platform
+# 🎉 Event Platform Backend + Frontend Static Serving  
 
-EventFlow is a lightweight event management backend and frontend scaffold built with Flask and MongoDB. It provides features for organizers to create events, view registrations and teams, export participants, and generate an AI-based roadmap. Participants can register, create/join teams (including AI-assisted matching), submit team projects, and use collaboration tools (chat, polls, whiteboard). A minimal static frontend is included in the `frontend/` folder 
+<div align="center">
+  
+A **Flask-based backend** that registers multiple feature blueprints and serves a static frontend (HTML/CSS/JS) directly from the repository. Designed for quick local development and simple deployments. 
 
-## Table of contents
-- About
-- Features
-- Tech stack
-- Quick start
-- Environment variables
-- API overview
-- Frontend
-- Development notes
-- License
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Flask-Backend-black?logo=flask)](https://flask.palletsprojects.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Database-green?logo=mongodb)](https://www.mongodb.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](#-license)
 
-## About
 
-This repository contains a simple event platform API (Flask) using MongoDB for storage. It was designed as a learning / demo project and includes helper utilities for AI-based roadmap generation and team matching.
+</div>
 
-## Features
+---
+## 🛠️ Tools & Tech Stack  
 
-- Organizer: create events, set deadlines, list events, export participants as CSV, view analytics, AI roadmap generation
-- Participant: list events, register, create/join teams, AI team matching, submit teams, request/accept/reject join requests
-- Collaboration: team chat, polls, collaborative whiteboard
-- Static frontend (HTML/CSS/JS) served directly by Flask
+- 🐍 **Python 3.10+** — Core programming language  
+- ⚡ **Flask** — Backend & API framework  
+- 🍃 **MongoDB** — Database (via `MONGO_URI`)  
+- 🎨 **HTML / CSS / JS** — Static frontend pages  
+- 🔐 **Flask-CORS & Sessions** — Auth & security  
+- 🧪 **Pytest** — Testing framework  
 
-## Tech stack
+---
 
-- Python 3.10
-- Flask
-- MongoDB (via PyMongo / flask-pymongo)
-- scikit-learn (used in AI utilities)
+## 🔗 Live Demo   
 
-Dependencies are listed in `requirements.txt`.
+🌐 **Demo:** [Click Here to Try It](https://event-platform-yhlx.onrender.com) 
 
-## Quick start (local)
+---
 
-1. Create a Python 3.10 virtual environment and activate it:
+## 📸 **Preview:**  
 
-```powershell
+![image](https://github.com/MdSaifAli063/Event-Platform/blob/01331d64620fd3708a137f8f488af0cecba2e739/Screenshot%202025-09-30%20005650.png)  
+
+![image](https://github.com/MdSaifAli063/Event-Platform/blob/1bdef3663499f184d8173fbbc8e728bb631752a4/Screenshot%202025-09-30%20005849.png)
+
+![image](https://github.com/MdSaifAli063/Event-Platform/blob/82db079d6c02164ba18919fd33333485925cee9c/Screenshot%202025-09-30%20005951.png)
+
+![image](https://github.com/MdSaifAli063/Event-Platform/blob/4ddd99f4fcf3620a42e3343a0940505d25e3be75/Screenshot%202025-09-30%20010059.png)
+
+![image](https://github.com/MdSaifAli063/Event-Platform/blob/307538cbb0496501e8696ee81e6775cd1761daf5/Screenshot%202025-09-30%20010408.png)
+
+---
+
+## 🧭 Overview  
+
+This application exposes API blueprints and serves the frontend pages from a sibling `frontend/` directory.  
+
+**Blueprints registered:**  
+- 🔐 Auth → `auth_bp`  
+- 👥 Organizer → `organizer_bp`  
+- 🙋 Participant → `participant_bp`  
+- 🤝 Collaboration → `collab_bp`  
+- 🖥️ Virtual Event → `virtual_bp`  
+
+---
+
+## 🧱 Project Structure  
+
+.
+├─ backend/
+│ ├─ app.py # Entry point registering blueprints and serving frontend
+│ ├─ config.py # Flask app, CORS, secrets, DB config
+│ └─ routes/
+│ ├─ auth.py # auth_bp
+│ ├─ organizer.py # organizer_bp
+│ ├─ participant.py # participant_bp
+│ ├─ collaboration.py # collab_bp
+│ └─ virtual_event.py # virtual_bp
+├─ frontend/
+-│ ├─ common_dashboard.html
+│ ├─ signin.html
+│ ├─ signup.html
+│ ├─ organizer_dashboard.html
+│ ├─ participant_dashboard.html
+│ ├─ virtual_event.html
+│ └─ assets/
+│ ├─ css/ ...
+│ └─ js/ ...
+└─ README.md
+
+
+> 📝 Ensure `backend/__init__.py` exists so `backend` is recognized as a package.  
+
+---
+
+## ⚙️ Prerequisites  
+
+- 🐍 Python 3.10+  
+- 📦 pip & virtualenv (or poetry/uv)  
+- 🍃 MongoDB (if using DB features)  
+- 🔑 Environment variables configured  
+
+---
+
+## 🚀 Setup  
+
+```bash
+# 1) Clone the repo
+git clone <repo-url>
+cd <project-folder>
+
+# 2) Create & activate a virtual environment
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-```
 
-2. Install dependencies:
+# Windows
+.venv\Scripts\activate
 
-```powershell
+# macOS/Linux
+source .venv/bin/activate
+
+# 3) Install dependencies
 pip install -r requirements.txt
+
+# 4) Create .env file
+cp .env.example .env
+
 ```
 
-3. Set environment variables (see next section). For local testing you can set sensible defaults. On Windows PowerShell example:
+## 🔐 Environment Variables
 
-```powershell
-Set-Item Env:SECRET_KEY "replace-me"
-Set-Item Env:MONGO_URI "mongodb://localhost:27017/event_platform"
-Set-Item Env:FLASK_DEBUG "True"
-Set-Item Env:PORT "5000"
+Example .env:
+
+```bash
+SECRET_KEY=supersecretkey
+MONGO_URI=mongodb://localhost:27017/your-db
+PORT=5000
+FLASK_DEBUG=True
+
 ```
+---
 
-4. Run the app:
+## ▶️ Run the App
 
-```powershell
-python backend/app.py
-```
+Recommended (module mode from root):
 
-The site serves static HTML from `frontend/` and exposes the API endpoints documented below. By default the root path `/` serves `common_dashboard.html`.
+python -m backend.app
 
-## Environment variables
+Alternative (Flask CLI):
 
-- SECRET_KEY — Flask session secret (default: `supersecretkey`)
-- MONGO_URI — MongoDB connection string (default falls back to a prefilled connection in `backend/config.py`; change this for production)
-- FLASK_DEBUG — `True` or `False` to enable Flask debug mode
-- PORT — Port to run the Flask app on (default 5000)
+### Windows (PowerShell)
+$env:FLASK_APP="backend.app"; $env:FLASK_DEBUG="True"; flask run --host 0.0.0.0 --port 5000
 
-Important: Do not commit production secrets. Update `backend/config.py` to remove any hard-coded URIs before deploying.
+### macOS/Linux
+export FLASK_APP=backend.app
+export FLASK_DEBUG=True
+flask run --host 0.0.0.0 --port 5000
 
-## API overview
+📍 Default: http://0.0.0.0:5000
+- 🏠 `GET /` → `frontend/common_dashboard.html`
+- 🔑 `GET /signin` → `frontend/signin.html`
+- 📝 `GET /signup` → `frontend/signup.html`
+- 🗂️ `GET /organizer_dashboard` → `frontend/organizer_dashboard.html`
+- 🙋 `GET /participant_dashboard` → `frontend/participant_dashboard.html`
+- 🖥️ `GET /virtual_event` → `frontend/virtual_event.html`
+- 🎨 `GET /assets/<path>` → serves from `frontend/assets/`
 
-All API routes are defined under `backend/routes/` and registered in `backend/app.py`. Below is a compact summary.
+All other unknown paths will fallback to `common_dashboard.html`.
 
-Auth
-- POST /signup — register (body: email, password, role)
-- POST /signin — login (body: email, password)
-- GET /auth/check_session — check session
-- POST /logout — logout
+---
 
-Organizer (requires organizer session)
-- POST /organizer/create_event — create event
-- GET /organizer/events — list events
-- GET /organizer/event/<event_id> — get event details
-- POST /organizer/event/<event_id>/deadline — update deadline
-- GET /organizer/<event_id>/participants — list registrations
-- GET /organizer/<event_id>/teams — list teams
-- GET /organizer/<event_id>/analytics — simple counts
-- GET /organizer/<event_id>/export — download participants CSV
-- GET /organizer/<event_id>/ai_roadmap — generate AI roadmap for event type
-- GET /organizer/<event_id>/submitted_teams — list submitted teams
-- GET /organizer/submitted-teams — list submitted teams (optional eventId query)
+## 🔌 API Routes
 
-Participant
-- GET /participant/events — list events
-- POST /participant/register — register as individual
-- POST /participant/register_hackathon — create/join/ai_match team (body includes action)
-- GET /participant/teams/<event_id> — list teams for an event
-- POST /participant/team/<team_id>/submit — submit team (requires verification fields)
-- GET /participant/team/<team_id>/status — team submission status
-- POST /participant/ai_match_request — request to join a team via AI match
-- GET /participant/team/<team_id>/requests — list pending join requests
-- POST /participant/request/<request_id>/accept — accept join request
-- POST /participant/request/<request_id>/reject — reject join request
+- 🏠 / → common_dashboard.html
+- 🔑 /signin → signin.html
+- 📝 /signup → signup.html
+- 🗂️ /organizer_dashboard → organizer_dashboard.html
+- 🙋 /participant_dashboard → participant_dashboard.html
+- 🖥️ /virtual_event → virtual_event.html
+- 🎨 /assets/<path> → static files
 
-Collaboration
-- GET/POST /collaboration/chat/<team_id> — team chat
-- GET/POST /collaboration/poll/<team_id> — create/list polls
-- POST /collaboration/vote/<poll_id> — vote on poll
-- GET/POST/DELETE /collaboration/whiteboard/<team_id> — whiteboard strokes
+---
 
-Virtual events
-- GET /virtual/video/<video_name> — serve video files from `frontend/assets/videos`
+## 🧑‍💻 Development Tips
 
-Notes:
-- Many organizer routes are protected by a simple session check (`require_organizer`). In production you'd want a more robust auth/role solution (JWT or proper session store) and CSRF protection.
+- Run from project root (not inside backend/)
+- Always keep backend/__init__.py present
+- Add new HTML → frontend/
+- Map new routes → backend/app.py
 
-## Frontend
+---
 
-Static frontend files are in `frontend/`. They are served directly by the Flask app. The frontend is minimal and intended as a demo to interact with the API.
+## 🧪 Testing
 
-## Development notes
+- pytest -q
 
-- The app uses MongoDB — make sure your `MONGO_URI` points to a running MongoDB instance.
-- Utility modules under `backend/utils/` provide AI features (team matching, roadmaps). They rely on `scikit-learn` and simple heuristics.
-- Before deploying, remove or rotate any hard-coded credentials in `backend/config.py`.
+---
+## 🛡️ Production Notes
 
-## Tests
+- ⚠️ Set FLASK_DEBUG=False and a strong SECRET_KEY
+- 🌍 Use WSGI server (gunicorn/waitress)
 
-No automated tests are included in this scaffold. Adding unit tests for route behaviors and utils is recommended.
+pip install gunicorn
 
-## License
+gunicorn -w 4 -b 0.0.0.0:${PORT:-5000} backend.app:app
 
-This project is provided as-is for demo/learning purposes. Add a license file if you intend to open source it.
+---
 
+## 🤝 Contributing
 
+- Fork repo
+- Create feature branch
+- Commit changes with clear messages
+- Open a PR
 
+---
 
+## 📄 License
+
+📝 Add your chosen license (MIT, Apache-2.0, etc.)
