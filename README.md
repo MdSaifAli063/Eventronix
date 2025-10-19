@@ -26,7 +26,7 @@ A **Flask-based backend** that registers multiple feature blueprints and serves 
 
 ## 🔗 Live Demo   
 
-🌐 **Demo:** [Click Here to Try It](https://event-platform-yhlx.onrender.com) 
+🌐 **Demo:** [Click Here to Try It](https://event-platform-xp0r.onrender.com) 
 
 ---
 
@@ -210,3 +210,4 @@ gunicorn -w 4 -b 0.0.0.0:${PORT:-5000} backend.app:app
 ## 📄 License
 
 📝 Add your chosen license (MIT, Apache-2.0, etc.)
+
