@@ -1,6 +1,6 @@
 # EventFlow — Event & Team Management Platform
 
-EventFlow is a lightweight event management backend and frontend scaffold built with Flask and MongoDB. It provides features for organizers to create events, view registrations and teams, export participants, and generate an AI-based roadmap. Participants can register, create/join teams (including AI-assisted matching), submit team projects, and use collaboration tools (chat, polls, whiteboard). A minimal static frontend is included in the `frontend/` folder.
+EventFlow is a lightweight event management backend and frontend scaffold built with Flask and MongoDB. It provides features for organizers to create events, view registrations and teams, export participants, and generate an AI-based roadmap. Participants can register, create/join teams (including AI-assisted matching), submit team projects, and use collaboration tools (chat, polls, whiteboard). A minimal static frontend is included in the `frontend/` folder 
 
 ## Table of contents
 - About
@@ -138,5 +138,7 @@ No automated tests are included in this scaffold. Adding unit tests for route be
 ## License
 
 This project is provided as-is for demo/learning purposes. Add a license file if you intend to open source it.
+
+
 
 
