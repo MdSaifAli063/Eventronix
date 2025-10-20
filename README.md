@@ -209,5 +209,7 @@ gunicorn -w 4 -b 0.0.0.0:${PORT:-5000} backend.app:app
 
 ## 📄 License
 
-📝 Add your chosen license (MIT, Apache-2.0, etc.)
+📝 MIT , Daval malik sayad ali makandar, Md Saif Ali
+
+
 
