@@ -209,6 +209,7 @@ gunicorn -w 4 -b 0.0.0.0:${PORT:-5000} backend.app:app
 
 ## 📄 License
 
-📝 MIT , Dawal Malik, Md Saif Ali
+📝 MIT , Daval malik sayad ali makandar, Md Saif Ali
+
 
 
